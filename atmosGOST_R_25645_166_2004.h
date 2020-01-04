@@ -9,3 +9,5 @@ double atmosGOST_R_25645_166_2004(double const h_km, // altitude, km; 120<h_km<1
 	double alpha, // прямое восхождение Солнца, рад
 	double delta // склонение Солнца, рад
 );
+
+double calcF81(double const F107[81]);

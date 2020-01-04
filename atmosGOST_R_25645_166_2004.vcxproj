@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="atmosGOST_R_25645_166_2004.h" />
+    <ClInclude Include="tables_1_3_GOST_R_25645_166_2004.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
