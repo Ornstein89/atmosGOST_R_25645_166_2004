@@ -15,15 +15,13 @@
 #define PARAMETERS_CHECK_ON // включение проверки входных параметров функций, снижает производительность но облегчает поиск ошибок
 #define TEST_ON
 
-#ifdef TEST_ON
 double test_glob_rho_night;
 double test_glob_K0;
 double test_glob_K1;
 double test_glob_K2;
 double test_glob_K3;
-double test_glob_K4;
-#endif // TEST_ON
-
+double test_glob_K4_1;
+double test_glob_K4_2;
 
 double calcF81(double const F107[81]) //значения F107 начиная с 80 суток перед текущей датой до текущей даты
 {
@@ -83,7 +81,7 @@ double atmosGOST_R_25645_166_2004(
 	}
 	#endif // PARAMETERS_CHECK_ON
 
-	// 3. Предварительный расчёт степеней от h_km, DoY, Kp:
+	// 2. Предварительный расчёт степеней от h_km, DoY, Kp:
 	// h_vec = {1, h, h^2, h^3, ..., h^6}
 	double h_vec[7];
 	h_vec[0] = 1.0;
@@ -107,7 +105,7 @@ double atmosGOST_R_25645_166_2004(
 		Kp_vec[i] = Kp_vec[i - 1] * Kp;
 	}
 
-	// 4. Выбор опорного значения индекса солнечной активности F0
+	// 3. Выбор опорного значения индекса солнечной активности F0
 	// и номера колонки для таблицы 2 или 3
 	/*
 	// альтернативный алгоритм поиска ближайшего  F0, показавший себя на 20-50% медленнее
@@ -147,7 +145,7 @@ double atmosGOST_R_25645_166_2004(
 		diff1 = diff2;
 	}
 	
-	// 5. Выбор коэффициентов из таблиц, учитывая высоту (2 либо 3 таблицы ГОСТа)
+	// 4. Выбор коэффициентов из таблиц, учитывая высоту (2 либо 3 таблицы ГОСТа)
 	// в том порядке, в котором они приведены в таблицах 2-3
 	double a[7] = { 0.0 };
 	if (h_km < a_high_table[0][n_col]) {
@@ -270,13 +268,17 @@ double atmosGOST_R_25645_166_2004(
 		}
 	}
 
+	// 5. Расчёт коэффициентов K0-K4
 	// коэффициент K0, учитывающий изменение плотности атмосферы, связанное с отклонением
 	double K0 = 0.0;
 	for (int i = 0; i < 5; i++) // сборка полинома
 	{
 		K0 += l[i] * h_vec[i];
 	};
-	K0 = K0 * (F81 - F0_arr[n_col]) / F0_arr[n_col] + 1.0; // коэффициент в связи с отклонением F81 от F0
+	#ifdef TEST_ON 
+	test_glob_K0 = K0;
+	#endif
+	K0 *= (F81 - F0_arr[n_col]) / F0_arr[n_col] + 1.0; // коэффициент в связи с отклонением F81 от F0
 
 	// коффициент K1, учитывающий суточный эффект в распределении плотности
 	double K1 = 0.0; // (c' * h_vec(1:5) ) * (cos_phi ^ ( n * h_vec(1:3) )) / 2; // суточный коэффициент распределения плотности
@@ -284,6 +286,9 @@ double atmosGOST_R_25645_166_2004(
 	{
 		K1 += c[i] * h_vec[i];
 	};
+	#ifdef TEST_ON 
+	test_glob_K1 = K1;
+	#endif
 	double cos_power = 0.0;
 	for (int i = 0; i < 3; i++) // сборка полинома
 	{
@@ -298,7 +303,7 @@ double atmosGOST_R_25645_166_2004(
 
 	double cos_phi = 1 / r * (X[2] * sin(delta_rad)
 		+ cos(delta_rad) * (X[0] * cos(beta_rad) + X[1] * sin(beta_rad)));
-	K1 = K1 * pow(cos_phi, cos_power)/2;
+	K1 *= pow(cos_phi, cos_power)/2;
 
 	// коэффициент K2, учитывающий полугодовой эффект
 	double K2 = 0.0;
@@ -306,6 +311,9 @@ double atmosGOST_R_25645_166_2004(
 	{
 		K2 += d[i] * h_vec[i];
 	}
+	#ifdef TEST_ON 
+	test_glob_K2 = K2;
+	#endif
 	double Ad = 0.0;
 	for (int i = 0; i < 9; i++) // сборка полинома
 	{
@@ -319,6 +327,9 @@ double atmosGOST_R_25645_166_2004(
 	{
 		K3 += b[i] * h_vec[i];
 	}
+	#ifdef TEST_ON 
+	test_glob_K3 = K3;
+	#endif
 
 	K3 *= (F107 - F81) / (F81 + abs(F107 - F81)); // изменение плотности в связи с отклонением F10.7 от F81
 
@@ -336,7 +347,10 @@ double atmosGOST_R_25645_166_2004(
 	{
 		K4_2 += e[i+5] * Kp_vec[i];
 	}
-
+	#ifdef TEST_ON 
+	test_glob_K4_1 = K4_1;
+	test_glob_K4_2 = K4_2;
+	#endif
 	double K4 = K4_1 * K4_2;
 
 	// финальная формула
@@ -348,14 +362,8 @@ double atmosGOST_R_25645_166_2004(
 	double rho_night = CONST_RHO_0 * exp(polynom);
 
 	#ifdef TEST_ON 
-	// вывод рассчитанных внутри функции коэффициентов из функции через (oh blame) глобальные переменные
 	test_glob_rho_night = rho_night;
-	test_glob_K0 = K0;
-	test_glob_K1 = K1;
-	test_glob_K2 = K2;
-	test_glob_K3 = K3;
-	test_glob_K4 = K4;
-	#endif // TEST_ON
+	#endif
 
 	return rho_night * K0 * (1 + K1 + K2 + K3 + K4);
 }
