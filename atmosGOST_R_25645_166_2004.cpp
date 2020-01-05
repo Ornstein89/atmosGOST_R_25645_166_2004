@@ -12,9 +12,6 @@
 #include <iostream>
 #include <cmath>
 
-#define PARAMETERS_CHECK_ON // включение проверки входных параметров функций, снижает производительность но облегчает поиск ошибок
-#define TEST_ON
-
 double test_glob_rho_night;
 double test_glob_K0;
 double test_glob_K1;
@@ -52,29 +49,29 @@ double atmosGOST_R_25645_166_2004(
 	double const F81,	// averaged weighted F10.7 for previous 80 days + current day / усреднённый за 81 сутки (80 предыдущих + 1 текущие) и взвешенный индекс солнечной активности
 	double const DoY,	// number of day from the beginning of the year / номер суток от начала года //TODO заменить на Mjd_TT
 	double const X[3],	// x, y, z - geocentric greenwich coordinates, km / гринвичские координаты точи пространства, км
-	double t_s,			// всемирное время, с
-	double S_rad,		// sidereal midnight time, rad / звёздное время в гринвическую полночь, рад
-	double alpha_rad,	// right ascention of the Sun, rad / прямое восхождение Солнца, рад
-	double delta_rad)	// declination of the Sun, rad / склонение Солнца, рад
+	double const t_s,	// всемирное время, с
+	double const S_rad,	// sidereal midnight time, rad / звёздное время в гринвическую полночь, рад
+	double const alpha_rad,	// right ascention of the Sun, rad / прямое восхождение Солнца, рад
+	double const delta_rad)	// declination of the Sun, rad / склонение Солнца, рад
 {
-	#ifdef PARAMETERS_CHECK_ON
+	#if defined(ATMOS_GOST_PARAMETERS_CHECK_ON)
 	// 1. Проверка корректности ввода, незначительно замедляет производительность
-	if (h_km < 120.0 || h_km > 1500.0) {
+	if ((h_km < 120.0) || (h_km > 1500.0)) {
 		std::cerr << "Input parameters Altitude above ellipsoid h_km = " << h_km
 			<<"km, while h must be 120 km <= h <= 1500 km." << std::endl;
 		return -1.0;
 	}
-	if (DoY < 0.0 || DoY > 366.0) {
+	if ((DoY < 0.0) || (DoY > 366.0)) {
 		std::cerr << "Day of year DoY = " << DoY
 			<< ", while h must be 0 <= DoY <= 366." << std::endl;
 		return -1.0;
 	}
-	if (alpha_rad < 0.0 || alpha_rad > 2*M_PI) {
+	if ((alpha_rad < 0.0) || (alpha_rad > 2*M_PI)) {
 		std::cerr << "Right ascention alpha_rad = " << alpha_rad
 			<< ", while alpha_rad must be 0 <= alpha_rad <= 2*PI." << std::endl;
 		return -1.0;
 	}
-	if (delta_rad < -M_PI || delta_rad > M_PI) {
+	if ((delta_rad < -M_PI) || (delta_rad > M_PI)) {
 		std::cerr << "Declination delta_rad = " << delta_rad
 			<< ", while delta_rad must be -PI <= delta_rad <= PI." << std::endl;
 		return -1.0;
@@ -144,6 +141,9 @@ double atmosGOST_R_25645_166_2004(
 		}
 		diff1 = diff2;
 	}
+	/*#ifdef ATMOS_GOST_TEST_ON 
+	std::cout << "F0 = " << F0_arr[n_col];
+	#endif*/
 	
 	// 4. Выбор коэффициентов из таблиц, учитывая высоту (2 либо 3 таблицы ГОСТа)
 	// в том порядке, в котором они приведены в таблицах 2-3
@@ -269,24 +269,24 @@ double atmosGOST_R_25645_166_2004(
 	}
 
 	// 5. Расчёт коэффициентов K0-K4
-	// коэффициент K0, учитывающий изменение плотности атмосферы, связанное с отклонением
+	// 5.1 коэффициент K0, учитывающий изменение плотности атмосферы, связанное с отклонением
 	double K0 = 0.0;
 	for (int i = 0; i < 5; i++) // сборка полинома
 	{
 		K0 += l[i] * h_vec[i];
 	};
-	#ifdef TEST_ON 
+	#ifdef ATMOS_GOST_TEST_ON 
 	test_glob_K0 = K0;
 	#endif
 	K0 *= (F81 - F0_arr[n_col]) / F0_arr[n_col] + 1.0; // коэффициент в связи с отклонением F81 от F0
 
-	// коффициент K1, учитывающий суточный эффект в распределении плотности
+	// 5.2 коффициент K1, учитывающий суточный эффект в распределении плотности
 	double K1 = 0.0; // (c' * h_vec(1:5) ) * (cos_phi ^ ( n * h_vec(1:3) )) / 2; // суточный коэффициент распределения плотности
 	for (int i = 0; i < 5; i++) // сборка полинома
 	{
 		K1 += c[i] * h_vec[i];
 	};
-	#ifdef TEST_ON 
+	#ifdef ATMOS_GOST_TEST_ON 
 	test_glob_K1 = K1;
 	#endif
 	double cos_power = 0.0;
@@ -305,13 +305,13 @@ double atmosGOST_R_25645_166_2004(
 		+ cos(delta_rad) * (X[0] * cos(beta_rad) + X[1] * sin(beta_rad)));
 	K1 *= pow(cos_phi, cos_power)/2;
 
-	// коэффициент K2, учитывающий полугодовой эффект
+	// 5.3 коэффициент K2, учитывающий полугодовой эффект
 	double K2 = 0.0;
 	for (int i = 0; i < 5; i++) // сборка полинома
 	{
 		K2 += d[i] * h_vec[i];
 	}
-	#ifdef TEST_ON 
+	#ifdef ATMOS_GOST_TEST_ON 
 	test_glob_K2 = K2;
 	#endif
 	double Ad = 0.0;
@@ -321,19 +321,19 @@ double atmosGOST_R_25645_166_2004(
 	}
 	K2 *= Ad;
 
-	// коэффициент K3, учитывающий изменение плотности, связанное с отклонением F107 от F81
+	// 5.4 коэффициент K3, учитывающий изменение плотности, связанное с отклонением F107 от F81
 	double K3 = 0.0;
 	for (int i = 0; i < 5; i++) // сборка полинома
 	{
 		K3 += b[i] * h_vec[i];
 	}
-	#ifdef TEST_ON 
+	#ifdef ATMOS_GOST_TEST_ON 
 	test_glob_K3 = K3;
 	#endif
 
 	K3 *= (F107 - F81) / (F81 + abs(F107 - F81)); // изменение плотности в связи с отклонением F10.7 от F81
 
-	// Расчёт коэффициента K4, учитывающий зависимость плотности атмосферы от геомагнитной возмущенности
+	// 5.5 Расчёт коэффициента K4, учитывающий зависимость плотности атмосферы от геомагнитной возмущенности
 	// при использовании среднесуточных коэффициентов геомагнитной активности
 	// e[5]...e[8]  и  Kp, при использовании 3-х часовых - et[5]...et[8] и kpp
 	double K4_1 = 0.0; // первый множитель K4
@@ -347,13 +347,13 @@ double atmosGOST_R_25645_166_2004(
 	{
 		K4_2 += e[i+5] * Kp_vec[i];
 	}
-	#ifdef TEST_ON 
+	#ifdef ATMOS_GOST_TEST_ON 
 	test_glob_K4_1 = K4_1;
 	test_glob_K4_2 = K4_2;
 	#endif
 	double K4 = K4_1 * K4_2;
 
-	// финальная формула
+	// 5.6 финальная формула
 	double polynom = 0.0;
 	for (int i = 0; i < 7; i++) // сборка полинома
 	{
@@ -361,7 +361,7 @@ double atmosGOST_R_25645_166_2004(
 	}
 	double rho_night = CONST_RHO_0 * exp(polynom);
 
-	#ifdef TEST_ON 
+	#ifdef ATMOS_GOST_TEST_ON 
 	test_glob_rho_night = rho_night;
 	#endif
 

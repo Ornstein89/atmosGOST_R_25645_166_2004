@@ -1,5 +1,12 @@
 #pragma once
 
+#ifndef ATMOS_GOST_H
+#define ATMOS_GOST_H
+
+// #define ATMOS_GOST_PARAMETERS_CHECK_ON
+#define ATMOS_GOST_TEST_ON
+
+
 extern double test_glob_rho_night;
 extern double test_glob_K0;
 extern double test_glob_K1;
@@ -21,3 +28,5 @@ double atmosGOST_R_25645_166_2004(
 	double delta_rad);	// declination of the Sun, rad / склонение Солнца, рад
 
 double calcF81(double const F107[81]);
+
+#endif // ATMOS_GOST_H

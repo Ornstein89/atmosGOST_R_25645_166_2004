@@ -4,8 +4,14 @@
 #include <string>
 #include <chrono>
 
-#include "atmosGOST_R_25645_166_2004.h"
+// определения для тестирования
 #include "tables_4_9_GOST_R_25645_166_2004.h"
+#include "tables_10_11_GOST_R_25645_166_2004.h"
+
+// #define ATMOS_GOST_PARAMETERS_CHECK // включение проверки входных параметров функций, снижает производительность но облегчает поиск ошибок
+// #define ATMOS_GOST_TEST // включение вывода тестовых данных из функции atmosGOST_R_25645_166_2004(), необходимо для тестирования, снижает производительность
+
+#include "atmosGOST_R_25645_166_2004.h" // подключение 
 
 double F0_arr_test[7] = { 75.0, 100.0, 125.0, 150.0, 175.0, 200.0, 250.0 };
 
@@ -18,14 +24,24 @@ bool test_by_tables4_9(
 	double const tol_coef,
 	bool const verbose)
 {
+	if (verbose) {
+		std::cout << std::endl << "=== Testing by matching GOST R 25645.166-2004 Tables 4-9 ==="
+			<< std::endl;
+		std::cout << "Result" << "\th,km" << "\t\tF107"
+			<< "\t\trho erros"
+			<< "\t\t\t\tK0-K4' erros"
+			<< std::endl;
+	}
 	double max_rho_err = 0.0;
 	double max_coef_err = 0.0;
+	double max_rho_err_i = 0.0;
+	double max_coef_err_i = 0.0;
 	for (int i = 0; i < 7; i++) // перечисление по шкале F
 	{
-		double max_rho_err_i = 0.0;
-		double max_coef_err_i = 0.0;
-		for (int j = 0; j < 70; j++)
+		for (int j = 0; j < 70; j++) // перечисление по шкале высоты
 		{
+			max_rho_err_i = 0.0;
+			max_coef_err_i = 0.0;
 			double h = H0 + j * H_step;
 			double X0[3] = { 0.0 };
 			X0[0] = h;
@@ -46,36 +62,96 @@ bool test_by_tables4_9(
 			max_rho_err_i = std::fmax(max_rho_err_i, err_rho0);
 
 			double err_rhoK0 = abs(test_glob_K0 - table_K0[j][i]);
-			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK0);
 			double err_rhoK1 = abs(test_glob_K1 - table_K1[j][i]);
-			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK1);
 			double err_rhoK2 = abs(test_glob_K2 - table_K2[j][i]);
-			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK2);
 			double err_rhoK3 = abs(test_glob_K3 - table_K3[j][i]);
-			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK3);
 			double err_rhoK4_1 = abs(test_glob_K4_1 - table_K4[j][i]);
+
+			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK0);
+			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK1);
+			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK2);
+			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK3);
 			max_coef_err_i = std::fmax(max_coef_err_i, err_rhoK4_1);
-			
-			//test_glob_K4_2 - ;
 
 			if (verbose) {
 				std::string rslt =
 					((max_rho_err_i < tol_rho)&&(max_coef_err_i < tol_coef))
 					? ("OK")
-					: ("***FAILED");
+					: ("**ERR");
 				std::cout << rslt
 					<< "\th = " << h
 					<< ";\tF107 = " << F0_arr_test[i]
 					<< ";\tmax_rho_error = " << max_rho_err_i
-					<< ";\tmax_coef_error = " << max_coef_err_i
+					<< ";\t\tmax_coef_error = " << max_coef_err_i
+					<< std::endl
+					<< "\t" << table_rho_night[j][i] << "/" << test_glob_rho_night
+					<< "\t" << table_K0[j][i] << "/" << test_glob_K0
+					<< "\t" << table_K1[j][i] << "/" << test_glob_K1
+					<< "\t" << table_K2[j][i] << "/" << test_glob_K2
+					<< "\t" << table_K3[j][i] << "/" << test_glob_K3
+					<< "\t" << table_K4[j][i] << "/" << test_glob_K4_1
 					<< std::endl;
 			}
+			max_rho_err = std::fmax(max_rho_err, max_rho_err_i);
+			max_coef_err = std::fmax(max_coef_err, max_coef_err_i);
 		}
-		max_rho_err = std::fmax(max_rho_err, max_rho_err_i);
-		max_coef_err = std::fmax(max_coef_err, max_coef_err_i);
 	}
 
 	return (max_rho_err <= tol_rho)&&(max_coef_err <= tol_coef);
+}
+
+bool test_by_tables10_11(
+	double const tol_coef,
+	bool const verbose)
+{
+	if (verbose) {
+		std::cout << std::endl << "=== Testing by matching GOST R 25645.166-2004 Table 10 ==="
+			<< std::endl;
+		std::cout << "Result" << "\th,km" << "\t\tF107"
+			<< "\t\tK4'' error" << std::endl;
+	}
+	double max_coef_err = 0.0, err_rhoK4_2 = 0.0;
+	for (int i = 0; i < 7; i++) // перечисление по шкале F
+	{
+		for (int j = 0; j < 22; j++) // перечисление по шкале Kp
+		{
+			double Kp = Kp0 + j * Kp_step;
+			double h = rand_f(120.0, 1500.0);
+			double X0[3] = { 0.0 };
+			X0[0] = h;
+
+			double rho = atmosGOST_R_25645_166_2004(
+				h,
+				F0_arr_test[i],
+				Kp,
+				F0_arr_test[i], // 
+				0.0,
+				X0,
+				0.0,
+				0.0,
+				0.0,
+				0.0);
+
+			err_rhoK4_2 = abs(test_glob_K4_2 - table_K4_2_24h[j][i]);
+
+			if (verbose) {
+				std::string rslt =
+					(err_rhoK4_2 < tol_coef)
+					? ("OK")
+					: ("**ERR");
+				std::cout << rslt
+					<< "\th = " << h
+					<< ";\tF107 = " << F0_arr_test[i]
+					<< ";\terr_rhoK4_2 = " << err_rhoK4_2
+					<< std::endl;
+			}
+		}
+		max_coef_err = std::fmax(max_coef_err, err_rhoK4_2);
+	}
+	if (verbose) {
+		std::cout << "\tMaximal K4'' error = " << max_coef_err << std::endl;
+	}
+	return (max_coef_err <= tol_coef);
 }
 
 int main()
@@ -140,8 +216,21 @@ int main()
 	std::cout << "Time 2: " << elapsed.count() << std::endl;
 	*/
 
-	double tol_rho = 1e-16, tol_coef = 1e-04;
+	double tol_rho = 1e-10, tol_coef = 1e-02;
 	test_by_tables4_9(tol_rho, tol_coef, true);
+	test_by_tables10_11(tol_coef, true);
+
+	/*
+	for (int i = 0; i < 100; i++) {
+		double Kp = 3.0;
+		double h = rand_f(120.0, 1500.0);
+		double F = rand_f(65.0, 260.0);
+		double X0[3] = { 0.0 };
+		X0[0] = h;
+		std::cout << "Parameter F = " << F << "\t";
+		double rho = atmosGOST_R_25645_166_2004(h, F, Kp, F, 0.0, X0, 0.0, 0.0, 0.0, 0.0);
+		std::cout << std::endl;
+	}*/
 
 	std::system("pause");
 	return 0;
