@@ -148,123 +148,123 @@ double atmosGOST_R_25645_166_2004(
 	// 4. Выбор коэффициентов из таблиц, учитывая высоту (2 либо 3 таблицы ГОСТа)
 	// в том порядке, в котором они приведены в таблицах 2-3
 	double a[7] = { 0.0 };
-	if (h_km < a_high_table[0][n_col]) {
-		for (int i = 0; i < 7; i++)
-		{
-			a[i] = a_low_table[i + 1][n_col];
-		}
-	}
-	else {
+	if (h_km > a_high_table[0][n_col]) {
 		for (int i = 0; i < 7; i++)
 		{
 			a[i] = a_high_table[i + 1][n_col];
 		}
 	}
-
-	double b[5] = { 0.0 };
-	if (h_km < b_high_table[0][n_col]) {
-		for (int i = 0; i < 5; i++)
+	else {
+		for (int i = 0; i < 7; i++)
 		{
-			b[i] = b_low_table[i + 1][n_col];
+			a[i] = a_low_table[i + 1][n_col];
 		}
 	}
-	else {
+
+	double b[5] = { 0.0 };
+	if (h_km > b_high_table[0][n_col]) {
 		for (int i = 0; i < 5; i++)
 		{
 			b[i] = b_high_table[i + 1][n_col];
 		}
 	}
-
-	double c[5] = { 0.0 };
-	if (h_km < c_high_table[0][n_col]) {
+	else {
 		for (int i = 0; i < 5; i++)
 		{
-			c[i] = c_low_table[i + 1][n_col];
+			b[i] = b_low_table[i + 1][n_col];
 		}
 	}
-	else {
+
+	double c[5] = { 0.0 };
+	if (h_km > c_high_table[0][n_col]) {
 		for (int i = 0; i < 5; i++)
 		{
 			c[i] = c_high_table[i + 1][n_col];
 		}
 	}
-
-	double n[3] = { 0.0 };
-	if (h_km < c_high_table[0][n_col]) { // высота именно из таблицы коэффициента c
-		for (int i = 0; i < 3; i++)
+	else {
+		for (int i = 0; i < 5; i++)
 		{
-			n[i] = n_low_table[i][n_col];
+			c[i] = c_low_table[i + 1][n_col];
 		}
 	}
-	else {
+
+	double n[3] = { 0.0 };
+	if (h_km > c_high_table[0][n_col]) { // высота именно из таблицы коэффициента c
 		for (int i = 0; i < 3; i++)
 		{
 			n[i] = n_high_table[i][n_col];
 		}
 	}
+	else {
+		for (int i = 0; i < 3; i++)
+		{
+			n[i] = n_low_table[i][n_col];
+		}
+	}
 
 	// коэффициент модели, равный углу запаздывания максимума плотности по отношению к максимуму освещённости, рад
 	double phi1 = 0.0;
-	if (h_km <  c_high_table[0][n_col]) { // высота именно из таблицы коэффициента c
-		phi1 = phi1_low_table[n_col];
+	if (h_km > c_high_table[0][n_col]) { // высота именно из таблицы коэффициента c
+		phi1 = phi1_high_table[n_col];
 	}
 	else {
-		phi1 = phi1_high_table[n_col];
+		phi1 = phi1_low_table[n_col];
 	}
 
 	double d[5] = { 0.0 };
-	if (h_km < d_high_table[0][n_col]) {
-		for (int i = 0; i < 5; i++)
-		{
-			d[i] = d_low_table[i + 1][n_col];
-		}
-	}
-	else {
+	if (h_km > d_high_table[0][n_col]) {
 		for (int i = 0; i < 5; i++)
 		{
 			d[i] = d_high_table[i + 1][n_col];
 		}
 	}
-
-	double e[9] = { 0.0 };
-	if (h_km < e_high_table[0][n_col]) {
-		for (int i = 0; i < 9; i++)
+	else {
+		for (int i = 0; i < 5; i++)
 		{
-			e[i] = e_low_table[i + 1][n_col];
+			d[i] = d_low_table[i + 1][n_col];
 		}
 	}
-	else {
+
+	double e[9] = { 0.0 };
+	if (h_km > e_high_table[0][n_col]) {
 		for (int i = 0; i < 9; i++)
 		{
 			e[i] = e_high_table[i + 1][n_col];
 		}
 	}
-
-	double et[4] = { 0.0 };
-	if (h_km < e_high_table[0][n_col]) { // высота именно из таблицы коэффициента e
-		for (int i = 0; i < 4; i++)
+	else {
+		for (int i = 0; i < 9; i++)
 		{
-			et[i] = et_low_table[i][n_col];
+			e[i] = e_low_table[i + 1][n_col];
 		}
 	}
-	else {
+
+	double et[4] = { 0.0 };
+	if (h_km > e_high_table[0][n_col]) { // высота именно из таблицы коэффициента e
 		for (int i = 0; i < 4; i++)
 		{
 			et[i] = et_high_table[i][n_col];
 		}
 	}
+	else {
+		for (int i = 0; i < 4; i++)
+		{
+			et[i] = et_low_table[i][n_col];
+		}
+	}
 
 	double l[5] = { 0.0 };
-	if (h_km < l_high_table[0][n_col]) {
+	if (h_km > l_high_table[0][n_col]) {
 		for (int i = 0; i < 5; i++)
 		{
-			l[i] = l_low_table[i + 1][n_col];
+			l[i] = l_high_table[i + 1][n_col];
 		}
 	}
 	else {
 		for (int i = 0; i < 5; i++)
 		{
-			l[i] = l_high_table[i + 1][n_col];
+			l[i] = l_low_table[i + 1][n_col];
 		}
 	}
 

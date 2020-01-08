@@ -78,18 +78,17 @@ bool test_by_tables4_9(
 					((max_rho_err_i < tol_rho)&&(max_coef_err_i < tol_coef))
 					? ("OK")
 					: ("**ERR");
-				std::cout << rslt
-					<< "\th = " << h
+				std::cout << rslt << "\th = " << h
 					<< ";\tF107 = " << F0_arr_test[i]
-					<< ";\tmax_rho_error = " << max_rho_err_i
+					/*<< ";\tmax_rho_error = " << max_rho_err_i
 					<< ";\t\tmax_coef_error = " << max_coef_err_i
-					<< std::endl
-					<< "\t" << table_rho_night[j][i] << "/" << test_glob_rho_night
-					<< "\t" << table_K0[j][i] << "/" << test_glob_K0
-					<< "\t" << table_K1[j][i] << "/" << test_glob_K1
-					<< "\t" << table_K2[j][i] << "/" << test_glob_K2
-					<< "\t" << table_K3[j][i] << "/" << test_glob_K3
-					<< "\t" << table_K4[j][i] << "/" << test_glob_K4_1
+					<< std::endl*/
+					<< "\t" /*<< table_rho_night[j][i] << "/"*/ << test_glob_rho_night
+					<< "\t" /*<< table_K0[j][i] << "/"*/ << test_glob_K0
+					<< "\t" /*<< table_K1[j][i] << "/"*/ << test_glob_K1
+					<< "\t" /*<< table_K2[j][i] << "/"*/ << test_glob_K2
+					<< "\t" /*<< table_K3[j][i] << "/"*/ << test_glob_K3
+					<< "\t" /*<< table_K4[j][i] << "/"*/ << test_glob_K4_1
 					<< std::endl;
 			}
 			max_rho_err = std::fmax(max_rho_err, max_rho_err_i);
@@ -216,7 +215,7 @@ int main()
 	std::cout << "Time 2: " << elapsed.count() << std::endl;
 	*/
 
-	double tol_rho = 1e-10, tol_coef = 1e-02;
+	double tol_rho = 1e-10, tol_coef = 1.0e-03;
 	test_by_tables4_9(tol_rho, tol_coef, true);
 	test_by_tables10_11(tol_coef, true);
 
