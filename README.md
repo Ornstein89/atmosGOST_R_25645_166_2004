@@ -6,7 +6,7 @@
 [EN]
 (In progress, not tested yet!) Function to calculate upper Earth atmosphere density by GOST R 25645.166-2004 model in C++, Python and Matlab. GOST R 25645.166-2004 model is russian equivalent to NRLMSISE-00, Jacchia-Bowman JB-2008 models and others.
 
-## Manual for C++
+## Use in C++ projects
 
 [RU]
 1) Поместите `atmosGOST_R_25645_166_2004.h` и `atmosGOST_R_25645_166_2004.cpp` в каталог вашего проекта.
@@ -21,7 +21,6 @@
 ## TODO list
 
 * Python and Matlab functions.
-* Testing.
 * Performance optimization.
 * Documentation.
 
