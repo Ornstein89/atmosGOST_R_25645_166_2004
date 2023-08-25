@@ -1,5 +1,5 @@
-﻿#include "atmosGOST_R_25645_166_2004.h"
-#include "tables_1_3_GOST_R_25645_166_2004.h"
+#include <atmosGOST_R_25645_166_2004.h>
+#include <tables_1_3_GOST_R_25645_166_2004.h>
 
 #define CONST_RHO_0		1.58868e-08		// кг / м ^ 3, плотность ночной атмосферы на высоте 120км
 #define CONST_OMEGA_Z	7.292115e-05	// рад/с, угловая скорость вращения Земли

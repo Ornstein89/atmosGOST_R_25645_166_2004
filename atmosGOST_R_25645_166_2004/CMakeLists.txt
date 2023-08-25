@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(atmosGOST_R_25645_166_2004)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(SOURCES
+    atmosGOST_R_25645_166_2004.cpp
+    atmosGOST_R_25645_166_2004.h
+    tables_1_3_GOST_R_25645_166_2004.h
+    tables_4_9_GOST_R_25645_166_2004.h
+    tables_10_11_GOST_R_25645_166_2004.h
+)
+
+add_library(atmosGOST_R_25645_166_2004 INTERFACE ${SOURCES})
+target_include_directories(atmosGOST_R_25645_166_2004 INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
