@@ -3,30 +3,44 @@
 #ifndef ATMOS_GOST_H
 #define ATMOS_GOST_H
 
-// #define ATMOS_GOST_PARAMETERS_CHECK_ON
-#define ATMOS_GOST_TEST_ON
+double const H0 = 120.0;	//TODO	// высота начала шкалы таблиц 4-9 //TODO
+double const H_end = 1500.0;	//TODO	// конечная высота шкалы таблиц 4-9 //TODO
+double const H_step = 20.0;		// шаг шкалы таблиц 4-9 по высоте
 
 
-extern double test_glob_rho_night;
-extern double test_glob_K0;
-extern double test_glob_K1;
-extern double test_glob_K2;
-extern double test_glob_K3;
-extern double test_glob_K4_1;
-extern double test_glob_K4_2;
+/* Шкала опорных значений индекса солнечной активности F0,
+ * по которой выстроены колонки таблиц 2-3 */
+extern double F0_arr[7]; // { 75.0, 100.0, 125.0, 150.0, 175.0, 200.0, 250.0 };
 
-double atmosGOST_R_25645_166_2004(
-	double const h_km,	// altitude above Earth ellipsoid 120<h_km<1500, km / высота над уровнем земного эллипсоида, от 120 до 1500, км 
-	double const F107,	// F10.7 solar emission index / индекс солнечной активности
-	double const Kp,	// квазилогарифмический планетарный среднесуточный индекс геомагнитной активности, баллы
-	double const F81,	// averaged weighted F10.7 for previous 80 days + current day / усреднённый за 81 сутки (80 предыдущих + 1 текущие) и взвешенный индекс солнечной активности
-	double const DoY,	// number of day from the beginning of the year / номер суток от начала года //TODO заменить на Mjd_TT
-	double const X[3],	// x, y, z - geocentric greenwich coordinates, km / гринвичские координаты точи пространства, км
-	double t_s,			// всемирное время, с
-	double S_rad,		// sidereal midnight time, rad / звёздное время в гринвическую полночь, рад
-	double alpha_rad,	// right ascention of the Sun, rad / прямое восхождение Солнца, рад
-	double delta_rad);	// declination of the Sun, rad / склонение Солнца, рад
 
 double calcF81(double const F107[81]);
+
+int getClosestF0(double F81);
+
+double rho_night(const double h_km, const double h_km_powers[7], const int n_col);
+
+double K0_prime(const double h_km, const double h_km_powers[7], int n_col);
+
+double K1_prime(const double h_km, const double h_km_powers[7], int n_col);
+
+double K2_prime(const double h_km, const double h_km_powers[7], int n_col);
+
+double K3_prime(const double h_km, const double h_km_powers[7], int n_col);
+
+double K4_prime(const double h_km, const double h_km_powers[7], int n_col);
+
+double K4_prime2_24h(const double Kp, int n_col);
+
+double atmosGOST_R_25645_166_2004(
+    double const h_km,
+    double const F107,
+    double const Kp,
+    double const F81,
+    double const DoY,
+    double const X[3],
+    double t_s,
+    double S_rad,
+    double alpha_rad,
+    double delta_rad);
 
 #endif // ATMOS_GOST_H

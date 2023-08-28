@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="atmosGOST_R_25645_166_2004.cpp">
+      <Filter>Код</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Код</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="atmosGOST_R_25645_166_2004.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="tables_1_3_GOST_R_25645_166_2004.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="tables_4_9_GOST_R_25645_166_2004.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="tables_10_11_GOST_R_25645_166_2004.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Заголовки">
+      <UniqueIdentifier>{cb741e74-23b6-44f1-b801-2ef0dedb015b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Код">
+      <UniqueIdentifier>{7b3bb2e6-de70-4bd2-85e1-cc3c4daa7834}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
