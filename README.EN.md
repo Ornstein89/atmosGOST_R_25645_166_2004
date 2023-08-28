@@ -6,7 +6,7 @@
 
 ![under_construction](under_construction.png)
 
-*(In progress, not tested yet!)* Function to calculate upper Earth atmosphere density by GOST R 25645.166-2004 model in C++, Python and Matlab. GOST R 25645.166-2004 model is russian equivalent to NRLMSISE-00, Jacchia-Bowman JB-2008 models and others.
+*(In progress, partially tested yet!)* Function to calculate upper Earth atmosphere density by GOST R 25645.166-2004 model in C++, Python and Matlab. GOST R 25645.166-2004 model is russian equivalent to NRLMSISE-00, Jacchia-Bowman JB-2008 models and others.
 
 ## Repo contents
 
@@ -26,6 +26,7 @@
 - [ ] Python and Matlab functions.
 - [ ] Performance optimization.
 - [ ] Documentation.
-- [ ] Internationalization.
-- [ ] CMake infrastructure.
+- [x] Internationalization.
+- [x] CMake infrastructure.
 - [ ] Tests.
+- [ ] CI/CD.
