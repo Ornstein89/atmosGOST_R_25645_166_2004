@@ -11,6 +11,7 @@
 #define CONST_dt_Kp		0.6	 // запаздывание по Kp
 #define CONST_dt_kpp	0.25 // сут, запаздывание по kpp
 
+// #define _MATH_H
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <cmath>
@@ -72,7 +73,7 @@ int getClosestF0(double F81)
     else if(F81 >= 225)
         return 6;
     else
-        return round(F81/25) - 3;
+        return std::round(F81/25) - 3;
 }
 
 
@@ -101,7 +102,7 @@ double rho_night(const double h_km, const double h_km_powers[7], const int n_col
         polynom += a[i] * h_km_powers[i];
     }
 
-    double rho_night = CONST_RHO_0 * exp(polynom);
+    double rho_night = CONST_RHO_0 * std::exp(polynom);
     return rho_night;
 }
 
@@ -393,11 +394,11 @@ double atmosGOST_R_25645_166_2004(
 	// и долготой с максимальным значением плотности в её суточном распределении, рад
 	double beta_rad = alpha_rad - S_rad - CONST_OMEGA_Z * t_s + phi1;
 
-	double cos_phi = 1 / r * (X[2] * sin(delta_rad)
-		+ cos(delta_rad) * (X[0] * cos(beta_rad) + X[1] * sin(beta_rad)));
-    double cos_half_phi = sqrt(1+cos_phi / 2);
+	double cos_phi = 1 / r * (X[2] * std::sin(delta_rad)
+		+ cos(delta_rad) * (X[0] * std::cos(beta_rad) + X[1] * sin(beta_rad)));
+    double cos_half_phi = std::sqrt(1+cos_phi / 2);
     double K1 = K1_prime(h_km, h_km_powers, n_col)
-                * pow(cos_half_phi, cos_power); // исправлена ошибка cos(phi)/2 -> cos(phi/2)
+                * std::pow(cos_half_phi, cos_power); // исправлена ошибка cos(phi)/2 -> cos(phi/2)
 
     // 5.3 Коэффициент K2, учитывающий полугодовой эффект
 	double Ad = 0.0;

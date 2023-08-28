@@ -2,6 +2,9 @@
 
 #include <vector>
 #include <string>
+// #define _MATH_H
+// #define _USE_MATH_DEFINES
+#include <cmath>
 
 #include <atmosGOST_R_25645_166_2004.h>
 #include <tables_4_9_GOST_R_25645_166_2004.h>
@@ -61,7 +64,7 @@ TEST(rho_night_table4, positive)
 
             double expected_density = table_rho_night[hi][F0i];
             // относительная погрешность плотности - на 2 порядка меньше
-            double tolerance = 0.5 * pow(10, floor(log10(expected_density))-2);
+            double tolerance = 0.5 * std::pow(10, std::floor(std::log10((long double)expected_density))-2);
             double density = rho_night(h_km, h_km_powers, F0i);
             EXPECT_TRUE(abs(density-expected_density) < tolerance)
                 << "Input: h_km = " << h_km << ", F0 = " << F0
@@ -96,11 +99,6 @@ TEST(K0_prime_table5, positive)
             // относительная погрешность плотности - на 2 порядка меньше
 
             double tolerance = 0.001; //TODO
-            // if(expected_value==0.0)
-            //     tolerance = 0.5 * pow(10, floor(log10(value))-2);
-            // else
-            //     tolerance = 0.5 * pow(10, floor(log10(expected_value))-2);
-
 
             EXPECT_TRUE(abs(value-expected_value) < tolerance)
                 << "Input: h_km = " << h_km << ", F0 = " << F0
@@ -136,10 +134,6 @@ TEST(K1_prime_table6, positive)
             // относительная погрешность плотности - на 2 порядка меньше
 
             double tolerance = 0.001; //TODO
-            // if(expected_value==0.0)
-            //     tolerance = 0.5 * pow(10, floor(log10(value))-2);
-            // else
-            //     tolerance = 0.5 * pow(10, floor(log10(expected_value))-2);
 
 
             EXPECT_TRUE(abs(value-expected_value) < tolerance)
@@ -177,11 +171,6 @@ TEST(K2_prime_table7, positive)
             // относительная погрешность плотности - на 2 порядка меньше
 
             double tolerance = 0.001; //TODO
-            // if(expected_value==0.0)
-            //     tolerance = 0.5 * pow(10, floor(log10(value))-2);
-            // else
-            //     tolerance = 0.5 * pow(10, floor(log10(expected_value))-2);
-
 
             EXPECT_TRUE(abs(value-expected_value) < tolerance)
                 << "Input: h_km = " << h_km << ", F0 = " << F0
@@ -218,11 +207,6 @@ TEST(K3_prime_table8, positive)
             // относительная погрешность плотности - на 2 порядка меньше
 
             double tolerance = 0.001; //TODO
-            // if(expected_value==0.0)
-            //     tolerance = 0.5 * pow(10, floor(log10(value))-2);
-            // else
-            //     tolerance = 0.5 * pow(10, floor(log10(expected_value))-2);
-
 
             EXPECT_TRUE(abs(value-expected_value) < tolerance)
                 << "Input: h_km = " << h_km << ", F0 = " << F0
@@ -259,11 +243,6 @@ TEST(K4_prime_table9, positive)
             // относительная погрешность плотности - на 2 порядка меньше
 
             double tolerance = 0.001;   //TODO
-            // if(expected_value==0.0)
-            //     tolerance = 0.5 * pow(10, floor(log10(value))-2);
-            // else
-            //     tolerance = 0.5 * pow(10, floor(log10(expected_value))-2);
-
 
             EXPECT_TRUE(abs(value-expected_value) < tolerance)
                 << "Input: h_km = " << h_km << ", F0 = " << F0
@@ -305,7 +284,7 @@ int main(int argc, char **argv) {
 
     // std::cout << "*** log10(1.62E-08) = " << floor(log10(1.62E-08));
     // std::cout << "*** log10(1.66E-13) = " << floor(log10(1.66E-13));
-    std::cout << "*** log10(0.0) = " << floor(log10(0.0));
+    // std::cout << "*** log10(0.0) = " << std::floor(std::log10(0.0));
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
