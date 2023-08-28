@@ -1,6 +1,6 @@
 # Атмосфера Земли верхняя ГОСТ Р 25645.166-2004
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![en](https://img.shields.io/badge/lang-en-green.svg)](README.EN.md) [![ru](https://img.shields.io/badge/lang-ru-green.svg)](README.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![en](https://img.shields.io/badge/lang-en-green.svg)](README.EN.md) [![ru](https://img.shields.io/badge/lang-ru-green.svg)](README.md) [![CMake on multiple platforms](https://github.com/Ornstein89/atmosGOST_R_25645_166_2004/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/Ornstein89/atmosGOST_R_25645_166_2004/actions/workflows/cmake-multi-platform.yml)
 
 [English version](README.EN.md)
 
