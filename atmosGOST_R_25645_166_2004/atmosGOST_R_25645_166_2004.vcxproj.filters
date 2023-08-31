@@ -4,21 +4,24 @@
     <ClCompile Include="atmosGOST_R_25645_166_2004.cpp">
       <Filter>Код</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Код</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="atmosGOST_R_25645_166_2004.h">
-      <Filter>Заголовки</Filter>
-    </ClInclude>
-    <ClInclude Include="tables_1_3_GOST_R_25645_166_2004.h">
       <Filter>Заголовки</Filter>
     </ClInclude>
     <ClInclude Include="tables_4_9_GOST_R_25645_166_2004.h">
       <Filter>Заголовки</Filter>
     </ClInclude>
     <ClInclude Include="tables_10_11_GOST_R_25645_166_2004.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="table_1_GOST_R_25645_166_2004.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="table_2_GOST_R_25645_166_2004.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="table_3_GOST_R_25645_166_2004.h">
       <Filter>Заголовки</Filter>
     </ClInclude>
   </ItemGroup>

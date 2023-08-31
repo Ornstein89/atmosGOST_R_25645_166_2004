@@ -2,14 +2,16 @@
 
 #include <vector>
 #include <string>
-// #define _MATH_H
-// #define _USE_MATH_DEFINES
 #include <cmath>
 
 #include <atmosGOST_R_25645_166_2004.h>
 #include <tables_4_9_GOST_R_25645_166_2004.h>
 #include <tables_10_11_GOST_R_25645_166_2004.h>
 
+
+/**
+ * Тест функции определения номера колонки для таблиц 2 и 3 по значению F81
+ */
 TEST(getClosestF0, positive)
 {
     struct getClosestF0_inout {
@@ -60,13 +62,13 @@ TEST(rho_night_table4, positive)
             {
                 h_km_powers[i] = h_km_powers[i - 1] * h_km;
             }
-
-
             double expected_density = table_rho_night[hi][F0i];
-            // относительная погрешность плотности - на 2 порядка меньше
+
+            /* относительная погрешность плотности - погрешность округления
+             * (0,5 от последнего значащего разряда) плотности из таблицы 4 */
             double tolerance = 0.5 * std::pow(10, std::floor(std::log10((long double)expected_density))-2);
             double density = rho_night(h_km, h_km_powers, F0i);
-            EXPECT_TRUE(abs(density-expected_density) < tolerance)
+            EXPECT_TRUE(std::abs(density-expected_density) < tolerance)
                 << "Input: h_km = " << h_km << ", F0 = " << F0
                 << ", expected rho = " << expected_density
                 << ", result = " << density;
@@ -74,9 +76,46 @@ TEST(rho_night_table4, positive)
     }
 }
 
+
 /**
- *  Тест функции определения плотности ночной атмосферы K0_prime()
- *  (соответствует функции K0') по таблице 5 ГОСТ Р 25645.166-2004
+ * @brief compare_as_double - процедура сравнения рассчитанных значений коэффициентов
+ * Kn' (K0'...K4'') с ожидаемыми значениями из таблиц 5-10, основанная на
+ * сравнении разности чисел в формате double с ожидаемой погрешностью
+ * округления коэффициентов в таблицах ГОСТ, равной 0,0005
+ * @param ecpected - ожидаемое значение коэффициента Kn' (K0'...K4'') из таблиц
+ * @param calculated - рассчитанное значение
+ * @return true если величины различаются менее, чем на величину погрешности
+ */
+bool compare_as_double(double expected, double calculated)
+{
+    /* относительная погрешность - погрешность округления
+     * 0,0005 (т.е. 0,5 от последнего значащего разряда)
+     * Kn' из таблиц 5-10 - ТЕСТ НЕ ПРОХОДИТ кроме K3';
+     * при 0,001 - не проходит только K2' */
+    double tolerance = 0.0005;
+    return std::abs(calculated-expected) < tolerance;
+}
+
+
+/**
+ * @brief compare_as_fixed - процедура сравнения рассчитанных значений коэффициентов
+ * Kn' (K0'...K4'') с ожидаемыми значениями из таблиц 4-10, основанная на
+ * сравнении чисел, приведённых к фиксированной точности до 3 разряда
+ * @param ecpected - ожидаемое значение коэффициента Kn' (K0'...K4'') из таблиц
+ * @param calculated - рассчитанное значение
+ * @return true если величины различаются менее, чем на величину погрешности
+ */
+bool compare_as_fixed(double expected, double calculated)
+{
+    int expected_int = static_cast<int>(std::round(1000.0 * expected));
+    int calculated_int = static_cast<int>(std::round(1000.0 * calculated));
+    return (expected_int==calculated_int);
+}
+
+
+/**
+ *  Тест функции K0_prime() (или K0') векового изменения солнечной активности
+ *  в 11-летнем цикле, по таблице 5 ГОСТ Р 25645.166-2004
 */
 TEST(K0_prime_table5, positive)
 {
@@ -96,22 +135,20 @@ TEST(K0_prime_table5, positive)
 
             double expected_value = table_K0[hi][F0i];
             double value = K0_prime(h_km, h_km_powers, F0i);
-            // относительная погрешность плотности - на 2 порядка меньше
 
-            double tolerance = 0.001; //TODO
-
-            EXPECT_TRUE(abs(value-expected_value) < tolerance)
+            //EXPECT_TRUE(compare_as_double(expected_value, value))
+            EXPECT_TRUE(compare_as_fixed(expected_value, value))
                 << "Input: h_km = " << h_km << ", F0 = " << F0
                 << ", expected value = " << expected_value
                 << ", value = " << value
-                << ", error = " << abs(expected_value-value);
+                << ", error = " << std::abs(expected_value-value);
         }
     }
 }
 
 /**
- *  Тест функции определения плотности ночной атмосферы K1_prime()
- *  (соответствует функции K1') по таблице 6 ГОСТ Р 25645.166-2004
+ *  Тест функции K1_prime() (K1') амплитуды солнечного эффекта
+ *  по таблице 6 ГОСТ Р 25645.166-2004
 */
 TEST(K1_prime_table6, positive)
 {
@@ -131,24 +168,21 @@ TEST(K1_prime_table6, positive)
 
             double expected_value = table_K1[hi][F0i];
             double value = K1_prime(h_km, h_km_powers, F0i);
-            // относительная погрешность плотности - на 2 порядка меньше
 
-            double tolerance = 0.001; //TODO
-
-
-            EXPECT_TRUE(abs(value-expected_value) < tolerance)
+            //EXPECT_TRUE(compare_as_double(expected_value, value))
+            EXPECT_TRUE(compare_as_fixed(expected_value, value))
                 << "Input: h_km = " << h_km << ", F0 = " << F0
                 << ", expected value = " << expected_value
                 << ", value = " << value
-                << ", error = " << abs(expected_value-value);
+                << ", error = " << std::abs(expected_value-value);
         }
     }
 }
 
 
 /**
- *  Тест функции определения плотности ночной атмосферы K2_prime()
- *  (соответствует функции K2') по таблице 7 ГОСТ Р 25645.166-2004
+ *  Тест функции K2_prime() (K2') влияния полугодового эффекта
+ *  по таблице 7 ГОСТ Р 25645.166-2004
 */
 TEST(K2_prime_table7, positive)
 {
@@ -168,23 +202,21 @@ TEST(K2_prime_table7, positive)
 
             double expected_value = table_K2[hi][F0i];
             double value = K2_prime(h_km, h_km_powers, F0i);
-            // относительная погрешность плотности - на 2 порядка меньше
 
-            double tolerance = 0.001; //TODO
-
-            EXPECT_TRUE(abs(value-expected_value) < tolerance)
+            //EXPECT_TRUE(compare_as_double(expected_value, value))
+            EXPECT_TRUE(compare_as_fixed(expected_value, value))
                 << "Input: h_km = " << h_km << ", F0 = " << F0
                 << ", expected value = " << expected_value
                 << ", value = " << value
-                << ", error = " << abs(expected_value-value);
+                << ", error = " << std::abs(expected_value-value);
         }
     }
 }
 
 
 /**
- *  Тест функции определения плотности ночной атмосферы K2_prime()
- *  (соответствует функции K3') по таблице 8 ГОСТ Р 25645.166-2004
+ *  Тест функции K3_prime() (K3') влияния радиоизлучения Солнца
+ *  по таблице 8 ГОСТ Р 25645.166-2004
 */
 TEST(K3_prime_table8, positive)
 {
@@ -204,23 +236,21 @@ TEST(K3_prime_table8, positive)
 
             double expected_value = table_K3[hi][F0i];
             double value = K3_prime(h_km, h_km_powers, F0i);
-            // относительная погрешность плотности - на 2 порядка меньше
 
-            double tolerance = 0.001; //TODO
-
-            EXPECT_TRUE(abs(value-expected_value) < tolerance)
+            //EXPECT_TRUE(compare_as_double(expected_value, value))
+            EXPECT_TRUE(compare_as_fixed(expected_value, value))
                 << "Input: h_km = " << h_km << ", F0 = " << F0
                 << ", expected value = " << expected_value
                 << ", value = " << value
-                << ", error = " << abs(expected_value-value);
+                << ", error = " << std::abs(expected_value-value);
         }
     }
 }
 
 
 /**
- *  Тест функции определения плотности ночной атмосферы K4_prime()
- *  (соответствует функции K4') по таблице 9 ГОСТ Р 25645.166-2004
+ *  Тест функции K4_prime() (K4') - первого множителя для расчёта влияния
+ *  геомагнитной возмущённости, по таблице 9 ГОСТ Р 25645.166-2004
 */
 TEST(K4_prime_table9, positive)
 {
@@ -240,23 +270,21 @@ TEST(K4_prime_table9, positive)
 
             double expected_value = table_K4[hi][F0i];
             double value = K4_prime(h_km, h_km_powers, F0i);
-            // относительная погрешность плотности - на 2 порядка меньше
 
-            double tolerance = 0.001;   //TODO
-
-            EXPECT_TRUE(abs(value-expected_value) < tolerance)
+            //EXPECT_TRUE(compare_as_double(expected_value, value))
+            EXPECT_TRUE(compare_as_fixed(expected_value, value))
                 << "Input: h_km = " << h_km << ", F0 = " << F0
                 << ", expected value = " << expected_value
                 << ", value = " << value
-                << ", error = " << abs(expected_value-value);
+                << ", error = " << std::abs(expected_value-value);
         }
     }
 }
 
 
 /**
- *  Тест функции определения плотности ночной атмосферы K4_prime2()
- *  (соответствует функции K4'') по таблице 10 ГОСТ Р 25645.166-2004
+ *  Тест функции K4_prime2() (K4'') - второго множителя для расчёта влияния
+ *  геомагнитной возмущённости, по таблице 10 ГОСТ Р 25645.166-2004
 */
 TEST(K4_prime2_table10, positive)
 {
@@ -267,24 +295,18 @@ TEST(K4_prime2_table10, positive)
             double Kp = Kp0 + Kpi * Kp_step;
             double expected_value = table_K4_2_24h[Kpi][F0i];
             double value = K4_prime2_24h(Kp, F0i);
-            // относительная погрешность плотности - на 2 порядка меньше
 
-            double tolerance = 0.001; //TODO
-
-            EXPECT_TRUE(abs(value-expected_value) < tolerance)
+            //EXPECT_TRUE(compare_as_double(expected_value, value))
+            EXPECT_TRUE(compare_as_fixed(expected_value, value))
                 << "Input: Kp = " << Kp
                 << ", expected value = " << expected_value
                 << ", value = " << value
-                << ", error = " << abs(expected_value-value);
+                << ", error = " << std::abs(expected_value-value);
         }
     }
 }
 
 int main(int argc, char **argv) {
-
-    // std::cout << "*** log10(1.62E-08) = " << floor(log10(1.62E-08));
-    // std::cout << "*** log10(1.66E-13) = " << floor(log10(1.66E-13));
-    // std::cout << "*** log10(0.0) = " << std::floor(std::log10(0.0));
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
