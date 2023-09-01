@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>802</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ГОСТ Р 25645.166-2004</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 10pt &quot;Segoe UI&quot;;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="1">
+     <widget class="QGroupBox" name="gbManualParameters">
+      <property name="title">
+       <string>По параметрам</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QGroupBox" name="gbCurve1">
+         <property name="title">
+          <string>Кривая 1</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;F&lt;span style=&quot; vertical-align:sub;&quot;&gt;81&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnF81_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QDoubleSpinBox" name="spnTs_1">
+            <property name="maximum">
+             <double>86400.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="7">
+           <widget class="QDoubleSpinBox" name="spnAlpha_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;K&lt;span style=&quot; vertical-align:sub;&quot;&gt;p&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnKp_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QDoubleSpinBox" name="spnDelta_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;F&lt;span style=&quot; vertical-align:sub;&quot;&gt;107&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnF107_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QDoubleSpinBox" name="spnS_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="spnKp_1">
+            <property name="maximum">
+             <double>7.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;t&lt;sub&gt;s&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnTs_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;X&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnX_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QDoubleSpinBox" name="spnZ_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>7871.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QDoubleSpinBox" name="spnX_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="minimum">
+             <double>6491.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>7871.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Y&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnY_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="spnF81_1">
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="minimum">
+             <double>75.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>250.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="spnF107_1">
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="minimum">
+             <double>75.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>250.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QDoubleSpinBox" name="spnY_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>7871.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnZ_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="spnDoY_1">
+            <property name="maximum">
+             <double>365.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>DoY</string>
+            </property>
+            <property name="buddy">
+             <cstring>spnDoY_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnS_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="6">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;α&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnAlpha_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="6">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;δ&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnDelta_1</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbCurve2">
+         <property name="title">
+          <string>Кривая 2</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;F&lt;span style=&quot; vertical-align:sub;&quot;&gt;81&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnF81_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QDoubleSpinBox" name="spnTs_2">
+            <property name="maximum">
+             <double>86400.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="7">
+           <widget class="QDoubleSpinBox" name="spnAlpha_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;K&lt;span style=&quot; vertical-align:sub;&quot;&gt;p&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnKp_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QDoubleSpinBox" name="spnDelta_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;F&lt;span style=&quot; vertical-align:sub;&quot;&gt;107&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnF107_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QDoubleSpinBox" name="spnS_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="spnKp_2">
+            <property name="maximum">
+             <double>7.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;t&lt;sub&gt;s&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnTs_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;X&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnX_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QDoubleSpinBox" name="spnZ_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>7871.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QDoubleSpinBox" name="spnX_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="minimum">
+             <double>6491.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>7871.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Y&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnY_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="spnF81_2">
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="minimum">
+             <double>75.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>250.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="spnF107_2">
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="minimum">
+             <double>75.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>250.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>250.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QDoubleSpinBox" name="spnY_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>7871.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>100.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnZ_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="spnDoY_2">
+            <property name="maximum">
+             <double>365.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>DoY</string>
+            </property>
+            <property name="buddy">
+             <cstring>spnDoY_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnS_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="6">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;α&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnAlpha_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="6">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;δ&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnDelta_1</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <spacer name="horizontalSpacer_5">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="chkBunchOfCurves">
+      <property name="text">
+       <string>Семейство кривых</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <spacer name="horizontalSpacer_6">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <widget class="QChartView" name="chartView1" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 10pt &quot;Segoe UI&quot;;</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QWidget</extends>
+   <header location="global">QChartView</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
