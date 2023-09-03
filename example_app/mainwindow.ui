@@ -347,7 +347,7 @@
        <item>
         <widget class="QGroupBox" name="gbCurve2">
          <property name="title">
-          <string>Кривая 1</string>
+          <string>Кривая 2</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
