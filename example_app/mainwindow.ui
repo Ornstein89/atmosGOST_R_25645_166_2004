@@ -67,23 +67,6 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="4">
-           <widget class="QDoubleSpinBox" name="spnTs_1">
-            <property name="maximum">
-             <double>86400.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="7">
-           <widget class="QDoubleSpinBox" name="spnAlpha_1">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>6.283000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
@@ -97,16 +80,6 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="7">
-           <widget class="QDoubleSpinBox" name="spnDelta_1">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>6.283000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
@@ -117,16 +90,6 @@
             </property>
             <property name="buddy">
              <cstring>spnF107_1</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="7">
-           <widget class="QDoubleSpinBox" name="spnS_1">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>6.283000000000000</double>
             </property>
            </widget>
           </item>
@@ -153,71 +116,48 @@
             </property>
            </spacer>
           </item>
-          <item row="3" column="3">
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;t&lt;sub&gt;s&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
-            </property>
-            <property name="buddy">
-             <cstring>spnTs_1</cstring>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="3">
            <widget class="QLabel" name="label_9">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;X&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Широта&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::MarkdownText</enum>
             </property>
             <property name="buddy">
-             <cstring>spnX_1</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QDoubleSpinBox" name="spnZ_1">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>7871.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>100.000000000000000</double>
+             <cstring>spnB_1</cstring>
             </property>
            </widget>
           </item>
           <item row="0" column="4">
-           <widget class="QDoubleSpinBox" name="spnX_1">
+           <widget class="QDoubleSpinBox" name="spnB_1">
             <property name="decimals">
-             <number>3</number>
+             <number>2</number>
             </property>
             <property name="minimum">
-             <double>6491.000000000000000</double>
+             <double>-90.000000000000000</double>
             </property>
             <property name="maximum">
-             <double>7871.000000000000000</double>
+             <double>90.000000000000000</double>
             </property>
             <property name="singleStep">
-             <double>100.000000000000000</double>
+             <double>1.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.000000000000000</double>
             </property>
            </widget>
           </item>
           <item row="1" column="3">
            <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Y&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Долгота&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::MarkdownText</enum>
             </property>
             <property name="buddy">
-             <cstring>spnY_1</cstring>
+             <cstring>spnL_1</cstring>
             </property>
            </widget>
           </item>
@@ -248,15 +188,18 @@
            </widget>
           </item>
           <item row="1" column="4">
-           <widget class="QDoubleSpinBox" name="spnY_1">
+           <widget class="QDoubleSpinBox" name="spnL_1">
             <property name="decimals">
-             <number>3</number>
+             <number>2</number>
+            </property>
+            <property name="minimum">
+             <double>-180.000000000000000</double>
             </property>
             <property name="maximum">
-             <double>7871.000000000000000</double>
+             <double>180.000000000000000</double>
             </property>
             <property name="singleStep">
-             <double>100.000000000000000</double>
+             <double>1.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -276,19 +219,6 @@
             </property>
            </spacer>
           </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
-            </property>
-            <property name="buddy">
-             <cstring>spnZ_1</cstring>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="1">
            <widget class="QDoubleSpinBox" name="spnDoY_1">
             <property name="maximum">
@@ -306,7 +236,27 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="6">
+          <item row="2" column="4">
+           <widget class="QDoubleSpinBox" name="spnTs_1">
+            <property name="maximum">
+             <double>86400.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;t&lt;sub&gt;s&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnTs_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
            <widget class="QLabel" name="label_13">
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -319,7 +269,27 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="6">
+          <item row="3" column="4">
+           <widget class="QDoubleSpinBox" name="spnS_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QDoubleSpinBox" name="spnAlpha_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
            <widget class="QLabel" name="label_14">
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;α&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -332,7 +302,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="6">
+          <item row="1" column="6">
            <widget class="QLabel" name="label_15">
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;δ&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -342,6 +312,16 @@
             </property>
             <property name="buddy">
              <cstring>spnDelta_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="7">
+           <widget class="QDoubleSpinBox" name="spnDelta_1">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
             </property>
            </widget>
           </item>
@@ -367,7 +347,7 @@
        <item>
         <widget class="QGroupBox" name="gbCurve2">
          <property name="title">
-          <string>Кривая 2</string>
+          <string>Кривая 1</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -401,23 +381,6 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="4">
-           <widget class="QDoubleSpinBox" name="spnTs_2">
-            <property name="maximum">
-             <double>86400.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="7">
-           <widget class="QDoubleSpinBox" name="spnAlpha_2">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>6.283000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_6">
             <property name="text">
@@ -431,16 +394,6 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="7">
-           <widget class="QDoubleSpinBox" name="spnDelta_2">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>6.283000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_7">
             <property name="text">
@@ -451,16 +404,6 @@
             </property>
             <property name="buddy">
              <cstring>spnF107_1</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="7">
-           <widget class="QDoubleSpinBox" name="spnS_2">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>6.283000000000000</double>
             </property>
            </widget>
           </item>
@@ -487,71 +430,48 @@
             </property>
            </spacer>
           </item>
-          <item row="3" column="3">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;t&lt;sub&gt;s&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
-            </property>
-            <property name="buddy">
-             <cstring>spnTs_1</cstring>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="3">
-           <widget class="QLabel" name="label_17">
+           <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;X&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Широта&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::MarkdownText</enum>
             </property>
             <property name="buddy">
-             <cstring>spnX_1</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QDoubleSpinBox" name="spnZ_2">
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <double>7871.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>100.000000000000000</double>
+             <cstring>spnB_1</cstring>
             </property>
            </widget>
           </item>
           <item row="0" column="4">
-           <widget class="QDoubleSpinBox" name="spnX_2">
+           <widget class="QDoubleSpinBox" name="spnB_2">
             <property name="decimals">
-             <number>3</number>
+             <number>2</number>
             </property>
             <property name="minimum">
-             <double>6491.000000000000000</double>
+             <double>-90.000000000000000</double>
             </property>
             <property name="maximum">
-             <double>7871.000000000000000</double>
+             <double>90.000000000000000</double>
             </property>
             <property name="singleStep">
-             <double>100.000000000000000</double>
+             <double>1.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.000000000000000</double>
             </property>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QLabel" name="label_18">
+           <widget class="QLabel" name="label_16">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Y&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Долгота&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::MarkdownText</enum>
             </property>
             <property name="buddy">
-             <cstring>spnY_1</cstring>
+             <cstring>spnL_1</cstring>
             </property>
            </widget>
           </item>
@@ -579,21 +499,21 @@
             <property name="maximum">
              <double>250.000000000000000</double>
             </property>
-            <property name="value">
-             <double>250.000000000000000</double>
-            </property>
            </widget>
           </item>
           <item row="1" column="4">
-           <widget class="QDoubleSpinBox" name="spnY_2">
+           <widget class="QDoubleSpinBox" name="spnL_2">
             <property name="decimals">
-             <number>3</number>
+             <number>2</number>
+            </property>
+            <property name="minimum">
+             <double>-180.000000000000000</double>
             </property>
             <property name="maximum">
-             <double>7871.000000000000000</double>
+             <double>180.000000000000000</double>
             </property>
             <property name="singleStep">
-             <double>100.000000000000000</double>
+             <double>1.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -613,19 +533,6 @@
             </property>
            </spacer>
           </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="label_19">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
-            </property>
-            <property name="buddy">
-             <cstring>spnZ_1</cstring>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="1">
            <widget class="QDoubleSpinBox" name="spnDoY_2">
             <property name="maximum">
@@ -643,8 +550,28 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="6">
-           <widget class="QLabel" name="label_20">
+          <item row="2" column="4">
+           <widget class="QDoubleSpinBox" name="spnTs_2">
+            <property name="maximum">
+             <double>86400.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;t&lt;sub&gt;s&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::MarkdownText</enum>
+            </property>
+            <property name="buddy">
+             <cstring>spnTs_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="label_18">
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -656,8 +583,28 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="6">
-           <widget class="QLabel" name="label_21">
+          <item row="3" column="4">
+           <widget class="QDoubleSpinBox" name="spnS_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QDoubleSpinBox" name="spnAlpha_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QLabel" name="label_19">
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;α&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -669,8 +616,8 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="6">
-           <widget class="QLabel" name="label_22">
+          <item row="1" column="6">
+           <widget class="QLabel" name="label_20">
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;δ&lt;sub&gt;⮾&lt;/sub&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -679,6 +626,16 @@
             </property>
             <property name="buddy">
              <cstring>spnDelta_1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="7">
+           <widget class="QDoubleSpinBox" name="spnDelta_2">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>6.283000000000000</double>
             </property>
            </widget>
           </item>

@@ -6,6 +6,7 @@
 #include <QLineSeries>
 #include <QLogValueAxis>
 #include <QValueAxis>
+#include <QtMath>
 
 #include <atmosGOST_R_25645_166_2004.h>
 
@@ -117,6 +118,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+/**
+ * @brief Выполняет расчёт семейства кривых, варьируя F107 и высоту,
+ * при этом F81 принимается равным F107, геоцентрическая координата X
+ * изменяется с высотой а координаты Y, Z и прочие параметры принимаютсяэ
+ * равными нулю
+ */
 void MainWindow::PlotBunchOfCurves()
 {
     m_chart1->removeAllSeries();
@@ -147,6 +155,68 @@ void MainWindow::PlotBunchOfCurves()
     }
 }
 
+
+/**
+ * @brief Функция для преобразования геоцентрических координат XYZ
+ * в геодезических координаты: широтыу (B), долготыу (L) и высоту (H)
+ * Используются формулы П1.4-П1.19 из ПЗ-90.11
+ */
+void BLHtoXYZ(
+    const double B_rad,
+    const double L_rad,
+    const double H_m,
+    double & X_m,
+    double & Y_m,
+    double & Z_m)
+{
+    double N = 1.0; // радиус кривизны первого вертикала
+    double e = 0.0; // эксцентриситет эллипсоида
+    X_m = (N+H_m)*std::cos(B_rad)*std::cos(L_rad);
+    Y_m = (N+H_m)*std::cos(B_rad)*std::sin(L_rad);
+    Z_m = ((1-e*e)*N + H_m)*std::sin(B_rad);
+    return;
+}
+
+
+/**
+ * @brief Векторизованный вариант функции
+ */
+void BLHtoXYZ(
+    const double BLH[3],
+    double XYZ_m[3])
+{
+    double N = 1.0; // радиус кривизны первого вертикала
+    double e = 0.0; // эксцентриситет эллипсоида
+    XYZ_m[0] = (N+BLH[2])*std::cos(BLH[0])*std::cos(BLH[1]);
+    XYZ_m[1] = (N+BLH[2])*std::cos(BLH[0])*std::sin(BLH[1]);
+    XYZ_m[2] = ((1-e*e)*N + BLH[2])*std::sin(BLH[0]);
+    return;
+}
+
+
+/**
+ * @brief Функция для преобразования геодезических координат широты (B),
+ * долготы (L) и высоты (H) в геоцентрические координаты
+ * Используются формулы П1.1 из ПЗ-90.11
+ */
+void XYZtoBLH(
+    const double X_m,
+    const double Y_m,
+    const double Z_m,
+    double & B_rad,
+    double & L_rad,
+    double & H_m)
+{
+    return;
+}
+
+
+/**
+ * @brief Построение пары кривых зависимости плотности от высоты по параметрам,
+ * указанным поользователем в графическом интерфейсе.
+ * Геоцентрические координаты X, Y и Z рассчитываются на основе широты и долготы,
+ * указанной пользователем, по формулам
+ */
 void MainWindow::PlotByParameters()
 {
     m_chart1->removeAllSeries();
@@ -160,18 +230,24 @@ void MainWindow::PlotByParameters()
         double h_km = 120;
         double h_step = 20;
         while(h_km <= 1500){
+            double BLH[3] = {
+                qDegreesToRadians(ui->spnB_1->value()),
+                qDegreesToRadians(ui->spnL_1->value()),
+                1000.0 * h_km
+            };
+            double XYZ[3] = {0.0};
+            BLHtoXYZ(BLH, XYZ);
+            XYZ[0] = XYZ[0]/1000.0;
+            XYZ[1] = XYZ[1]/1000.0;
+            XYZ[2] = XYZ[2]/1000.0;
 
-            double X[3] = {
-                           ui->spnX_1->value(),
-                           ui->spnY_1->value(),
-                           ui->spnZ_1->value()};
             double rho = atmosGOST_R_25645_166_2004(
                 h_km,
                 ui->spnF107_1->value(),
                 ui->spnKp_1->value(),
                 ui->spnF81_1->value(),
                 ui->spnDoY_1->value(),
-                X,
+                XYZ,
                 ui->spnTs_1->value(),
                 ui->spnS_1->value(),
                 ui->spnAlpha_1->value(),
@@ -184,24 +260,30 @@ void MainWindow::PlotByParameters()
         series->attachAxis(m_axisX);
     }
 
-    if(ui->gbCurve1->isChecked()){
+    if(ui->gbCurve2->isChecked()){
 
         QLineSeries * series = new QLineSeries();
         series->setName("Кривая 2");
         double h_km = 120;
         double h_step = 20;
         while(h_km <= 1500){
-            double X[3] = {
-                           ui->spnX_2->value(),
-                           ui->spnY_2->value(),
-                           ui->spnZ_2->value()};
+            double BLH[3] = {
+                qDegreesToRadians(ui->spnB_2->value()),
+                qDegreesToRadians(ui->spnL_2->value()),
+                1000.0 * h_km
+            };
+            double XYZ[3] = {0.0};
+            BLHtoXYZ(BLH, XYZ);
+            XYZ[0] = XYZ[0]/1000.0;
+            XYZ[1] = XYZ[1]/1000.0;
+            XYZ[2] = XYZ[2]/1000.0;
             double rho = atmosGOST_R_25645_166_2004(
                 h_km,
                 ui->spnF107_2->value(),
                 ui->spnKp_2->value(),
                 ui->spnF81_2->value(),
                 ui->spnDoY_2->value(),
-                X,
+                XYZ,
                 ui->spnTs_2->value(),
                 ui->spnS_2->value(),
                 ui->spnAlpha_2->value(),
