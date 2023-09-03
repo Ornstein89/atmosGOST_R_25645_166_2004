@@ -169,11 +169,14 @@ void BLHtoXYZ(
     double & Y_m,
     double & Z_m)
 {
-    double N = 1.0; // радиус кривизны первого вертикала
-    double e = 0.0; // эксцентриситет эллипсоида
+    double a_m = 6378136; // большая полуось эллипсоида, ПЗ-90.11 Таблица 2
+    double alpha = 1.0/298.25784;// Сжатие общеземного эллипсоида, ПЗ-90.11 Таблица 2
+    // double e2 = 0.0066943662; // квадрат эксцентриситет эллипсоида, ПЗ-90.11, Таблица 3
+    double e2 = (2 - alpha)*alpha; // квадрат эксцентриситет эллипсоида, П1.3
+    double N = a_m * std::sqrt(1 - e2 * std::pow(std::sin(B_rad), 2) ); // радиус кривизны первого вертикала, ПЗ-90.11 П1.2
     X_m = (N+H_m)*std::cos(B_rad)*std::cos(L_rad);
     Y_m = (N+H_m)*std::cos(B_rad)*std::sin(L_rad);
-    Z_m = ((1-e*e)*N + H_m)*std::sin(B_rad);
+    Z_m = ((1-e2)*N + H_m)*std::sin(B_rad);
     return;
 }
 
@@ -185,11 +188,14 @@ void BLHtoXYZ(
     const double BLH[3],
     double XYZ_m[3])
 {
-    double N = 1.0; // радиус кривизны первого вертикала
-    double e = 0.0; // эксцентриситет эллипсоида
+    double a_m = 6378136; // большая полуось эллипсоида, ПЗ-90.11 Таблица 2
+    double alpha = 1.0/298.25784;// Сжатие общеземного эллипсоида, ПЗ-90.11 Таблица 2
+    // double e2 = 0.0066943662; // квадрат эксцентриситет эллипсоида, ПЗ-90.11, Таблица 3
+    double e2 = (2 - alpha)*alpha; // квадрат эксцентриситет эллипсоида, П1.3
+    double N = a_m * std::sqrt(1 - e2 * std::pow(std::sin(BLH[0]), 2) ); // радиус кривизны первого вертикала, ПЗ-90.11 П1.2
     XYZ_m[0] = (N+BLH[2])*std::cos(BLH[0])*std::cos(BLH[1]);
     XYZ_m[1] = (N+BLH[2])*std::cos(BLH[0])*std::sin(BLH[1]);
-    XYZ_m[2] = ((1-e*e)*N + BLH[2])*std::sin(BLH[0]);
+    XYZ_m[2] = ((1-e2)*N + BLH[2])*std::sin(BLH[0]);
     return;
 }
 
