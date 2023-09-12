@@ -3,8 +3,8 @@
 name: CMake build Windows/Ubuntu
 
 on:
-  workflow_call: # reusable workflow
-  # workflow_dispatch: # для ручного вызова
+  # workflow_call: # reusable workflow
+  workflow_dispatch: # для ручного вызова
   # push:
   #   branches: [ "main" ]
   # pull_request:
