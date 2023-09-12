@@ -12,6 +12,9 @@ double const H_step = 20.0;		// шаг шкалы таблиц 4-9 по высо
  * по которой выстроены колонки таблиц 2-3 */
 extern double F0_arr[7]; // { 75.0, 100.0, 125.0, 150.0, 175.0, 200.0, 250.0 };
 
+double ApToKpLinearInterp(const double Ap);
+
+double KpToApLinearInterp(const double Kp);
 
 double calcF81(double const F107[81]);
 

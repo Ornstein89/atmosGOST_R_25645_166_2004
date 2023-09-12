@@ -1,0 +1,3 @@
+[submodule "nrlmsise00_brodowski/nrlmsise-00"]
+	path = nrlmsise00_brodowski/nrlmsise-00
+	url = https://git.linta.de/~brodo/nrlmsise-00.git

@@ -40,7 +40,54 @@ void init_library()
     // использовать ссылку на колонку, например a[7] = a_high_table[n_col]
     // и не производить поэлементное копирование
 
-    // TODO транспонирование
+    // TODO
+}
+
+const double tableAp[28] = {
+    0,      2,      3,      4,      5,      6,      7,
+    9,      12,     15,     18,     22,     27,     32,
+    39,     48,     56,     67,     80,     94,     111,
+    132,    154,	179,	207,	236,	300,	400};
+
+/**
+ * @brief Функция для перевода планетарного среднесуточного индекса
+ * геомагнитной активности Ap [нТл] в квазилогарифмический среднесуточный
+ * индекс Kp [баллы] по таблице А.1 ГОСТ Р 25645.166-2004
+ * @param ap
+ * @return
+ */
+double ApToKpLinearInterp(const double Ap)
+{
+    //TODO обработка ошибок
+    int i;
+    for(i=0; i < 27; i++){
+        if(tableAp[i] <= Ap && Ap <= tableAp[i+1])
+            break;
+        if(i==26)
+            return -1;
+    }
+    double result = (i*1.0/3.0)
+                    + 1.0/3.0 * (Ap - tableAp[i]) / (tableAp[i+1] - tableAp[i]);
+    return result;
+}
+
+
+/**
+ * @brief Функция для перевода квазилогарифмического среднесуточного
+ * индекса Kp [баллы] в планетарный среднесуточный индекс
+ * геомагнитной активности Ap [нТл] в  по таблице А.1 ГОСТ Р 25645.166-2004
+ * @param Kp
+ * @return
+ */
+double KpToApLinearInterp(const double Kp)
+{
+    //TODO обработка ошибок
+    double step = 1.0/3.0;
+    int i = std::floor(Kp / step);
+    double nearestLowKp = i * step;
+    double result = tableAp[i]
+                    + (tableAp[i+1] - tableAp[i]) * (Kp - nearestLowKp) / step;
+    return result;
 }
 
 
@@ -68,11 +115,11 @@ int getClosestF0(double F81)
     if(F81<0.0)
         return -1;
 
-    if(F81 < (75.0+100)/2)
+    if(F81 < (75.0+100)/2) // значение ближайшее к первому значению F0
         return 0;
-    else if(F81 >= 225)
+    else if(F81 >= 225) // значение, ближайшее к последнему значению F0
         return 6;
-    else
+    else // внутри таблицы - поиск ближайшего
         return std::round(F81/25) - 3;
 }
 
@@ -270,8 +317,11 @@ double K4_prime2_24h(const double Kp, int n_col)
  *
  * @param h_km - altitude above Earth ellipsoid, km, 120km<=h_km<=1500km /
  * высота над уровнем земного эллипсоида, км, от 120 до 1500км включительно
- * @param F107 - F10.7 solar emission index / индекс солнечной активности
- * @param Kp - квазилогарифмический планетарный среднесуточный индекс геомагнитной активности, баллы
+ * @param F107 - F10.7cm solar emission index, solar flux units (s.f.u.) /
+ * индекс солнечной активности, единицы
+ * @param Kp - quasi-logarithmic planetary 24-hour mean geomagnetic index, units /
+ * квазилогарифмический планетарный среднесуточный индекс геомагнитной
+ * активности, баллы
  * @param F81 - averaged weighted F10.7 for previous 80 days + current day /
  * усреднённый за 81 сутки (80 предыдущих + 1 текущие) и взвешенный индекс
  * солнечной активности
@@ -279,8 +329,8 @@ double K4_prime2_24h(const double Kp, int n_col)
  * начала года
  * @param X[3] - x, y, z - geocentric greenwich coordinates, km / гринвичские
  * геоцентрические координаты точи пространства, км
- * @param t_s - всемирное время, с
- * @param S_rad - sidereal midnight time, rad / звёздное время в гринвическую
+ * @param t_s - universal time, s / всемирное время, с
+ * @param S_rad - sidereal midnight time, rad / звёздное время в гринвичскую
  * полночь, рад
  * @param alpha_rad - right ascention of the Sun, rad / прямое восхождение
  * Солнца, рад

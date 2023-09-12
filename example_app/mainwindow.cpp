@@ -9,8 +9,9 @@
 #include <QtMath>
 
 #include <atmosGOST_R_25645_166_2004.h>
-
-
+extern "C" {
+    #include <nrlmsise-00.h>
+}
 
 void MainWindow::SetupChart()
 {
@@ -99,7 +100,10 @@ void MainWindow::SetupGUI()
                      this, &MainWindow::PlotByParameters);
     QObject::connect(ui->gbCurve2, &QGroupBox::toggled,
                      this, &MainWindow::PlotByParameters);
-
+    QObject::connect(ui->chkNrlmsise00on, &QCheckBox::toggled,
+                     this, &MainWindow::PlotByParameters);
+    QObject::connect(ui->chkGOSTon, &QCheckBox::toggled,
+                     this, &MainWindow::PlotByParameters);
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -229,7 +233,7 @@ void MainWindow::PlotByParameters()
 
     // QList<QGroupBox*> curveBoxes = {ui->gbCurve1, ui->gbCurve2};
 
-    if(ui->gbCurve1->isChecked()){
+    if(ui->gbCurve1->isChecked() && ui->chkGOSTon->isChecked()){
 
         QLineSeries * series = new QLineSeries();
         series->setName("Кривая 1");
@@ -266,7 +270,7 @@ void MainWindow::PlotByParameters()
         series->attachAxis(m_axisX);
     }
 
-    if(ui->gbCurve2->isChecked()){
+    if(ui->gbCurve2->isChecked() && ui->chkGOSTon->isChecked()){
 
         QLineSeries * series = new QLineSeries();
         series->setName("Кривая 2");
@@ -300,6 +304,104 @@ void MainWindow::PlotByParameters()
         m_chart1->addSeries(series);
         series->attachAxis(m_axisY);
         series->attachAxis(m_axisX);
+    }
+
+    if(ui->gbCurve1->isChecked() && ui->chkNrlmsise00on->isChecked()){
+        QLineSeries * series_nrlmsise00_1 = new QLineSeries();
+        series_nrlmsise00_1->setName("Кривая 1 (NRLMSISE-00)");
+
+        double h_km = 120;
+        double h_step = 20;
+
+        nrlmsise_input input;
+        input.doy = static_cast<int>(ui->spnDoY_1->value());
+        input.year=0; /* without effect */
+        input.sec=ui->spnTs_1->value();
+        input.g_lat=ui->spnB_1->value();
+        input.g_long=ui->spnL_1->value();
+
+        // см. комментарий к исходнику структуры nrlmsise_input:
+        input.lst=input.sec/3600.0 + input.g_long/15.0;
+
+        input.f107A=ui->spnF81_1->value();
+        input.f107=ui->spnF107_1->value();
+        input.ap=KpToApLinearInterp( ui->spnKp_1->value());
+        qDebug() << "ap = " << input.ap;
+
+        ap_array ap_array;
+        for(int i = 0; i < 7; i++)
+            ap_array.a[i] = KpToApLinearInterp( ui->spnKp_1->value());
+        input.ap_a = &ap_array;
+
+        // по заполнению см. комментарий к исходнику nrlmsise_flags
+        nrlmsise_flags flags;
+        //flags.switches[0] = 0.0;
+        for(int i = 0; i < 24; i++)
+            flags.switches[i] = 1.0;
+        flags.switches[9] = -1;
+
+        while(h_km <= 1000){
+            input.alt=h_km;
+            nrlmsise_output output;
+            gtd7(&input, &flags, &output);
+
+            double rho = output.d[5];
+            series_nrlmsise00_1->append(h_km, rho);
+            h_km += h_step;
+        }
+
+        m_chart1->addSeries(series_nrlmsise00_1);
+        series_nrlmsise00_1->attachAxis(m_axisY);
+        series_nrlmsise00_1->attachAxis(m_axisX);
+    }
+
+    if(ui->gbCurve2->isChecked() && ui->chkNrlmsise00on->isChecked()){
+        QLineSeries * series_nrlmsise00_2 = new QLineSeries();
+        series_nrlmsise00_2->setName("Кривая 2 (NRLMSISE-00)");
+
+        double h_km = 120;
+        double h_step = 20;
+
+        nrlmsise_input input;
+        input.doy = static_cast<int>(ui->spnDoY_2->value());
+        input.year=0; /* without effect */
+        input.sec=ui->spnTs_2->value();
+        input.g_lat=ui->spnB_2->value();
+        input.g_long=ui->spnL_2->value();
+
+        // см. комментарий к исходнику структуры nrlmsise_input:
+        input.lst=input.sec/3600.0 + input.g_long/15.0;
+
+        input.f107A=ui->spnF81_2->value();
+        input.f107=ui->spnF107_2->value();
+        input.ap=KpToApLinearInterp( ui->spnKp_2->value());
+        qDebug() << "ap = " << input.ap;
+
+        ap_array ap_array;
+        for(int i = 0; i < 7; i++)
+            ap_array.a[i] = KpToApLinearInterp( ui->spnKp_2->value());
+        input.ap_a = &ap_array;
+
+        // по заполнению см. комментарий к исходнику nrlmsise_flags
+        nrlmsise_flags flags;
+        //flags.switches[0] = 0.0;
+        for(int i = 0; i < 24; i++)
+            flags.switches[i] = 1.0;
+        flags.switches[9] = -1;
+
+        while(h_km <= 1000){
+            input.alt=h_km;
+            nrlmsise_output output;
+            gtd7(&input, &flags, &output);
+
+            double rho = output.d[5];
+            series_nrlmsise00_2->append(h_km, rho);
+            h_km += h_step;
+        }
+
+        m_chart1->addSeries(series_nrlmsise00_2);
+        series_nrlmsise00_2->attachAxis(m_axisY);
+        series_nrlmsise00_2->attachAxis(m_axisX);
     }
 }
 
