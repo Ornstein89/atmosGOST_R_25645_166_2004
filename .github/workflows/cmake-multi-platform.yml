@@ -48,9 +48,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.ACTIONS_TOKEN }}
-        submodules: 'recursive'
+      # with:
+      #   token: ${{ secrets.ACTIONS_TOKEN }}
+      #   submodules: 'recursive'
+    - name: Pull & update submodules recursively
+      run: |
+        git submodule init
+        git submodule update
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
