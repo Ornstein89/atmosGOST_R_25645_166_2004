@@ -1,7 +1,7 @@
-#include <atmosGOST_R_25645_166_2004.h>
-#include <table_1_GOST_R_25645_166_2004.h>
-#include <table_2_GOST_R_25645_166_2004.h>
-#include <table_3_GOST_R_25645_166_2004.h>
+#include "atmosGOST_R_25645_166_2004.h"
+#include "table_1_GOST_R_25645_166_2004.h"
+#include "table_2_GOST_R_25645_166_2004.h"
+#include "table_3_GOST_R_25645_166_2004.h"
 
 #define CONST_RHO_0		1.58868e-08	 // кг / м ^ 3, плотность ночной атмосферы на высоте 120км
 #define CONST_OMEGA_Z	7.292115e-05 // рад/с, угловая скорость вращения Земли
@@ -13,7 +13,6 @@
 
 // #define _MATH_H
 #define _USE_MATH_DEFINES
-#include <iostream>
 #include <cmath>
 
 
@@ -124,6 +123,15 @@ int getClosestF0(double F81)
 }
 
 
+/**
+ * @brief rho_night - функция для расчёта плотности ночной атмосферы по
+ * ГОСТ Р 25645.166-2004 п. 5.4
+ * @param h_km
+ * @param h_km_powers - массив степеней высоты [1, h, h^2, ..., h^6]
+ * с целью оптимизации рассчитан один раз вне функции
+ * @param n_col
+ * @return
+ */
 double rho_night(const double h_km, const double h_km_powers[7], const int n_col)
 {
 
@@ -154,6 +162,16 @@ double rho_night(const double h_km, const double h_km_powers[7], const int n_col
 }
 
 
+/**
+ * @brief K0_prime - функция расчёта K'0 из ГОСТ Р 25645.166-2004 п. 5.8,
+ * величины, характеризующей вековое изменение плотности ночной атмосферы
+ * в 11-летнем цикле солнечной активности
+ * @param h_km
+ * @param h_km_powers - массив степеней высоты [1, h, h^2, ..., h^6]
+ * с целью оптимизации рассчитан один раз вне функции
+ * @param n_col
+ * @return
+ */
 double K0_prime(const double h_km, const double h_km_powers[7], int n_col)
 {
     double l[5] = { 0.0 };
@@ -181,6 +199,15 @@ double K0_prime(const double h_km, const double h_km_powers[7], int n_col)
 }
 
 
+/**
+ * @brief K1_prime - функция расчёта K'1 из ГОСТ Р 25645.166-2004 п. 5.8,
+ * величины, характеризующей амплитуду суточного эффекта
+ * @param h_km
+ * @param h_km_powers - массив степеней высоты [1, h, h^2, ..., h^6]
+ * с целью оптимизации рассчитан один раз вне функции
+ * @param n_col
+ * @return
+ */
 double K1_prime(const double h_km, const double h_km_powers[7], int n_col)
 {
     double c[5] = { 0.0 };
@@ -206,6 +233,15 @@ double K1_prime(const double h_km, const double h_km_powers[7], int n_col)
 }
 
 
+/**
+ * @brief K2_prime - функция расчёта K'2 из ГОСТ Р 25645.166-2004 п. 5.8,
+ * величины, характеризующей влияние полугодового эффекта
+ * @param h_km
+ * @param h_km_powers - массив степеней высоты [1, h, h^2, ..., h^6]
+ * с целью оптимизации рассчитан один раз вне функции
+ * @param n_col
+ * @return
+ */
 double K2_prime(const double h_km, const double h_km_powers[7], int n_col)
 {
     double d[5] = { 0.0 };
@@ -231,6 +267,15 @@ double K2_prime(const double h_km, const double h_km_powers[7], int n_col)
 }
 
 
+/**
+ * @brief K3_prime - функция расчёта K'3 из ГОСТ Р 25645.166-2004 п. 5.8,
+ * величины, характеризующей влияние радиоизлучения Солнца
+ * @param h_km
+ * @param h_km_powers - массив степеней высоты [1, h, h^2, ..., h^6]
+ * с целью оптимизации рассчитан один раз вне функции
+ * @param n_col
+ * @return
+ */
 double K3_prime(const double h_km, const double h_km_powers[7], int n_col)
 {
     double b[5] = { 0.0 };
@@ -256,9 +301,20 @@ double K3_prime(const double h_km, const double h_km_powers[7], int n_col)
 }
 
 
+/**
+ * @brief K4_prime - функция расчёта K'4 из ГОСТ Р 25645.166-2004 п. 5.8,
+ * величины, характеризующей среднесуточное влияние геомагнитной возмущённости
+ * @param h_km
+ * @param h_km_powers - массив степеней высоты [1, h, h^2, ..., h^6]
+ * с целью оптимизации рассчитан один раз вне функции
+ * вне функции
+ * @param n_col
+ * @return
+ */
 double K4_prime(const double h_km, const double h_km_powers[7], int n_col)
 {
-    double e0to4[5] = { 0.0 };
+    // TODO после тестирования - избавиться от этого отдельного массива для быстродействия
+    double e0to4[5] = { 0.0 };  // коэффициенты e0-e4
     if (h_km > e_high_table[0][n_col]) {
         for (int i = 0; i < 5; i++)
         {
@@ -281,24 +337,34 @@ double K4_prime(const double h_km, const double h_km_powers[7], int n_col)
 }
 
 
+/**
+ * @brief K4_prime2 - функция расчёта K"4 из ГОСТ Р 25645.166-2004 п. 5.8,
+ * ещё одной величины, характеризующей среднесуточное влияние
+ * геомагнитной возмущённости (не путать с K"4 на трёхчасовом интервале,
+ * рассчитанным через коэффициенты et)
+ * @param Kp
+ * @param n_col
+ * @return
+ */
 double K4_prime2_24h(const double Kp, int n_col)
 {
-    double e5to8[4] = { 0.0 };
+    double e5to8[4] = { 0.0 }; // коэффициенты e5-e8
 
     // коэффициенты e5-e8 одинаковы в обеих таблицах 2 и 3
+    // TODO после тестирования - избавиться от этого отдельного массива для быстродействия
     for (int i = 0; i < 4; i++)
     {
         e5to8[i] = e_high_table[i + 1 + 5][n_col];
     }
 
-    double Kp_powers[4] = { 0.0 };
+    double Kp_powers[4] = { 0.0 }; // массив степеней Kp: [1, Kp, Kp^2, Kp^3]
     Kp_powers[0] = 1.0;
-    for (int i = 1; i < 5; i++)
+    for (int i = 1; i < 4; i++)
     {
         Kp_powers[i] = Kp_powers[i - 1] * Kp;
     }
 
-    double result = 0.0; // второй множитель K4
+    double result = 0.0; // второй множитель K4, K"4 ГОСТ Р 25645.166-2004 п. 5.8
     for (int i = 0; i < 4; i++) // сборка полинома
     {
         result += e5to8[i] * Kp_powers[i];

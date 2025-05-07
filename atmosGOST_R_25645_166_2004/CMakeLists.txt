@@ -20,8 +20,8 @@ set(SOURCES
     tables_10_11_GOST_R_25645_166_2004.cpp
 )
 
-#add_library(atmosGOST_R_25645_166_2004_tmp STATIC ${SOURCES})
-#target_include_directories(atmosGOST_R_25645_166_2004_tmp PUBLIC .)
+add_library(atmosGOST_R_25645_166_2004_static STATIC ${SOURCES})
+target_include_directories(atmosGOST_R_25645_166_2004_static PUBLIC .)
 
 add_library(atmosGOST_R_25645_166_2004
     INTERFACE
